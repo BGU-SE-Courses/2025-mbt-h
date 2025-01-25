@@ -10,7 +10,7 @@ function user(username, password) {
     username: username,
     password: password
   }
-};
+}
 
 function assignmentDetails(assignmentName, description, instructions){
   return {
@@ -18,21 +18,21 @@ function assignmentDetails(assignmentName, description, instructions){
     description: description,
     instructions: instructions
   }
-};
+}
 
 function submissionDetails(submissionText) {
   return {
     submissionText: submissionText
   }
-};
+}
 
 const TEACHER = {
   'teacher': user('teacher', 'sandbox24')
-};
+}
 
 const STUDENT = {
   'student': user('student', 'sandbox24')
-};
+}
 
 
 const ASSIGNMENTS = {
@@ -71,7 +71,7 @@ const ASSIGNMENTS = {
     'Document the results of the mini darkhole in our lab experiment',
     'Submit a report including the hypothesis, methods, results, and conclusion from the lab experiment. NOTE: there will be no delays to writing this assignment, even if the rest of your team got sucked into the blackhole and never came back.'
   )
-};
+}
 
 
 const SUBMISSIONS = {
