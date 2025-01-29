@@ -2,31 +2,52 @@
 This is a repository for the system-testing assignment of the Software Quality Engineering course at the [Ben-Gurion University](https://in.bgu.ac.il/), Israel.
 
 ## Assignment Description
-In this assignment, we tested an open-source software called [$$*TODO* software name$$](https://address-of-the-project.com).
+In this assignment, we tested an open-source software called [Moodle](https://sandbox.moodledemo.net/).
 
-$$*TODO* Add some general description about the software$$
+Moodle is a website that is generally used in an educational scope by students and teachers/professors. Teachers upload material for specific
+courses, create assignments and many other functionalities/features, and the courses are accessible to the students that are eligible for the 
+courses.
 
 ## Installation
-$$*TODO* Write instructions on how to install the software and prepare the testing environment$$
+We didn't perform any installations to use the sandbox as we used the one available online by the course.
 
 ## What we tested
-$$*TODO* Add a description of the module and the user stories that you chose to test.
-For example, in the case of the Moodle example, you can write something like this:
+We tested the assignment module that allows for creating and uploading solutions to assignment. We chose to test the following user stories:
 
-We tested the quiz module that allows for creating and taking quizzes. We chose to test the following user stories: 
+*User story:* a student submits a solution to an assignment and the teacher deketes the assignment
 
-*User story:* A teacher adds a new quiz to the course with two yes/no questions
+*Preconditions*: there is an assignment in the course
 
-*Preconditions:* There is a course with a teacher
+*Expected outcome*: the student successfully submitted and teacher successfully deletes the assignment
 
-*Expected outcome:* The quiz is added to the course.
 
-*User story:* A students attempts a quiz and answers correctly.
+*User story:* while the student is in the submission form of an assignment, the teacher deletes it.
 
-*Preconditions:* There is a course with a quiz with two yes/no questions and the quiz grade is calculated automatically and the grade is visible to the students upon submission.
+*Preconditions:*  there is an assignment in the course
 
-*Expected outcome:* The student receives 100.
-$$
+*Expected outcome:* the student fails to submit the assignment
+
+
+*User story:* the teacher deletes an assignment while the student is about to add a submission
+
+*Precoditions:* there is an assignment in the course
+
+*Expected outcome:* the student fails to add a submission to the deleted assignment
+
+
+*User story:* the teacher deletes an assignment while the student is about to enter the assignment
+
+*Precoditions:* there is an assignment in the course
+
+*Expected outcome:* the student fails to enter to the deleted assignment
+
+
+*User story:* the teacher deletes an assignment prior to the student entering the course
+
+*Precoditions:* there is an assignment in the course
+
+*Expected outcome:* the student enters the course without seeing an assignment
+
 
 ## How we tested
 We used two different testing methods:

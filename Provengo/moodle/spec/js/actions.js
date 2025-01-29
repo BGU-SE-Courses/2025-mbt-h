@@ -56,12 +56,17 @@ function addAssignment(session, data) {
 }
 
 
-function submitAssignment(session, data){
+function goToAssignment(session, data){
   //dynamic Xpath to assignment since name varies depending on chosen assignment
   let assignmentXpath = `//a[contains(@class, "aalink") and contains(span[@class="instancename"]/text(), "${data.assignmentName}")]`;
   session.click(assignmentXpath)
-  session.click(xpaths.submitAssignment.addSubmission)
+}
 
+function goToSubmission(session){
+  session.click(xpaths.submitAssignment.addSubmission)
+}
+
+function submitAssignment(session, data){
   session.waitForVisibility(xpaths.submitAssignment.submitButton)
   
   //Writing into a TinyMCE textbox for the assignment text

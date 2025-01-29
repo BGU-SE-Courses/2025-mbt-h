@@ -5,16 +5,40 @@
  * List of events "of interest" that we want test suites to cover.
  */
 const GOALS = [
-    any(/Howdy/),
-    any(/Mars/),
-    Ctrl.markEvent("Classic!")
+    any(/CourseEnter/),
+    any(/AssignmentEnter/),
+    any(/SubmissionForm/),
+    any(/Submitted/),
+    any(/Deleted/),
+    Ctrl.markEvent("Submitted then Deleted")
+    
 ];
 
 const makeGoals = function(){
-    return [ [ any(/Howdy/), any(/Venus/) ],
-             [ any(/Mars/) ],
-             [ Ctrl.markEvent("Classic!") ] ];
+    return [ [any(/CourseEnter/), any(/AssignmentEnter/), any(/SubmissionForm/), any(/Deleted/)], //Assignment deleted while student in form
+             [any(/CourseEnter/), any(/AssignmentEnter/), any(/Deleted/)], //assignment deleted while student in assignment
+             [ any(/CourseEnter/), any(/Deleted/) ], //assignment deleted while student in course
+             [ any(/Deleted/) ], //assignment deleted before anything
+             [ Ctrl.markEvent("Submitted then Deleted")]]; //student submitted then teacher deleted assignment
 }
+
+
+const makeTwoWayGoals = function() {
+    let events = [any(/CourseEnter/), any(/AssignmentEnter/), any(/SubmissionForm/), any(/Submitted/), any(/Deleted/)];
+    let pairs = [];
+
+    for (let i = 0; i < events.length; i++) {
+        for (let j = i + 1; j < events.length; j++) {
+            if (!(events[i].toString().includes("Deleted") && events[j].toString().includes("SubmissionForm"))) {
+                pairs.push([events[i], events[j]]);
+            }
+        }
+    }
+
+    pairs.push([Ctrl.markEvent("Submitted then Deleted")]);
+    return pairs;
+}
+
 
 /**
  * Ranks test suites by how many events from the GOALS array were met.
@@ -68,4 +92,3 @@ function rankByMetGoals( ensemble ) {
 
     return metGoalsPercent * 100; // convert to human-readable percentage
 }
-

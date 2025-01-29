@@ -25,7 +25,12 @@ provengo analyze -f pdf moodle
 provengo run --show-sessions moodle
 ```
 5. We repeated steps 1-4 until we were satisfied with the result.
-6. We recorded a video of the running tests and added it to the report. Since more than one browser session was opened, we recorded the entire screen. The link for the video is [here]($$*TODO* write the link$$).
+6. We recorded a video of the running tests and added it to the report. Since more than one browser session was opened, we recorded the entire screen. The link for the video is [here](https://drive.google.com/file/d/1x35uovuTUJuVife-5wlNo7JaxlZUg_t-/view?usp=sharing).
+
+A small explanation to what we witness in the video:
+    - There are three sessions that open, one for the teacher to create the assignment in preparation for our scenario testing, one for the student submitting and one for the teacher deleting the assignment
+    - We can see through the video that the student session is blocked until the teacher creates the assignment, furthermore we can also see that the third session of the teacher deleting the assignment only starts after the teacher creates the assignment..
+    
 7. We copied the generated graph of the model to a file named [model.pdf](submission-files/model.pdf) inside the submission-files directory.
 
 ### Test files

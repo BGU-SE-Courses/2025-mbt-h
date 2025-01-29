@@ -32,8 +32,14 @@ bthread('studentSubmit', function(){
   login(s, {username: STUDENT.student.username, password: STUDENT.student.password})
   bp.sync({request: bp.Event("Submitting Assignment")})
   let assignmentName = bp.store.get('assignmentName') //getting the assignment name from stored
-  goToCourse(s)
+  goToCourse(s) //go to course
+  bp.sync({request: bp.Event("CourseEnter")}) 
   let submissionText = choose(Object.values(SUBMISSIONS))
+  
+  goToAssignment(s, {assignmentName: assignmentName}) //go to assignment
+  bp.sync({request: bp.Event("AssignmentEnter")}) 
+  goToSubmission(s) //go to submission 
+  bp.sync({request: bp.Event("SubmissionForm")})
   submitAssignment(s, {assignmentName: assignmentName, submissionText: submissionText.submissionText})
   logout(s)
   bp.sync({request: bp.Event("Assignment Submitted")})
@@ -68,4 +74,14 @@ bthread('ValidateSubmit', function(){
     waitFor: bp.Event("Assignment Added"),
     block: [bp.Event("Submitting Assignment"), bp.Event("Deleting Assignment")]
   });
+})
+
+
+/**
+ * Marking the standard event where the student submits and then the teacher deletes the assignment
+ */
+bthread('SubmittedThenDeleted', function(){
+  bp.sync({waitFor: bp.Event("Assignment Submitted")})
+  bp.sync({waitFor: bp.Event("Assignment Deleted")})
+  Ctrl.doMark("Submitted then Deleted")
 })
