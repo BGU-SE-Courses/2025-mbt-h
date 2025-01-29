@@ -30,22 +30,35 @@ public class  MoodleHomePage {
         driver.manage().window().setSize(new Dimension(700, 800));
     }
 
-    public void login_Teacher(String username, String password) {
+    public void login(String username, String password)
+    {
         driver.get("http://localhost/login/index.php");
-        WebElement username_input = driver.findElement(By.xpath("//*[@id=\"username\"]"));
-        username_input.sendKeys(username);
-        WebElement password_input = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-        password_input.sendKeys(password);
-        WebElement loginButton = driver.findElement(By.xpath("//*[@id=\"loginbtn\"]"));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+        WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"username\"]")));
+        usernameInput.sendKeys(username);
+        WebElement passwordInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"password\"]")));
+        passwordInput.sendKeys(password);
+        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loginbtn\"]")));
         loginButton.click();
     }
-    public void have_the_course () throws InterruptedException {
+    public void have_the_course (int course_id )
+    {
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.get("http://localhost/my/courses.php");
-        Thread.sleep(2000);
-        driver.get("http://localhost/course/view.php?id=2");
-        Thread.sleep(2000);
+        wait.until(ExpectedConditions.urlContains("courses.php"));
+        String courseUrl = "http://localhost/course/view.php?id=" + course_id;
+        driver.get(courseUrl);
+        wait.until(ExpectedConditions.urlToBe(courseUrl));
+        WebElement courseTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("course-title")));
+        System.out.println("Course Loaded: " + courseTitle.getText());
+
     }
     public void delete_assignment() throws InterruptedException {
+
+        // i cant run the test right now but you have to change the  Thread.sleep(2000) line
+        // replace it with the wait driver functions
+        // like what i did in the log_in function
         driver.findElement(By.xpath("/html/body/div[2]/nav/div/div[2]/form/div/div")).click();
         Thread.sleep(2000);
         WebElement options = driver.findElement(By.xpath("//*[@id=\"action-menu-toggle-3\"]\n"));
