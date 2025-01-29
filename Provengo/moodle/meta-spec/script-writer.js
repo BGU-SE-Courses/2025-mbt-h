@@ -1,3 +1,5 @@
+// @provengo summon selenium
+
 /**
 * Generate an index file for the generated test suite/ensemble.
 * Such index file is useful for creating a central location containg test scenario metadata, or

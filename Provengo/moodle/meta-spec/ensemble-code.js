@@ -1,4 +1,5 @@
 // @provengo summon ctrl
+// @provengo summon selenium
 
 /**
  * List of events "of interest" that we want test suites to cover.

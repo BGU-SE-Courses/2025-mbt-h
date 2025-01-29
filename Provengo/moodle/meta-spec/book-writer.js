@@ -1,3 +1,5 @@
+//@provengo summon selenium
+
 /*
  * Default implementation for creating a manual test book
  * when using the "provengo gen-book" command.

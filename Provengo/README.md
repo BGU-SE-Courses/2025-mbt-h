@@ -17,7 +17,7 @@ For a full documentation go to [https://docs.provengo.tech](https://docs.proveng
 1. We started by creating the following files: [behavior.js](moodle/spec/js/behavior.js),[actions.js](moodle/spec/js/actions.js), and [data.js](moodle/data/data.js).
 2. We then ran the following command to generate the test model:
 ```shell
-provengo analyze -f PDF moodle   
+provengo analyze -f pdf moodle   
 ```
 3. We repeated steps 1-2 until we were satisfied with the generated model.
 4. We used the following command to run the tests:
@@ -32,7 +32,6 @@ provengo run --show-sessions moodle
 The test data is in [data.js](moodle/data/data.js), the set of possible actions is in [actions.js](moodle/spec/js/actions.js), and the behavior of the system is in [behavior.js](moodle/spec/js/behavior.js).
 See the files for a detailed description.
 
-$$*TODO*: Make sure that the text inside the files is informative, self-explanatory, and properly written (meaningful variable names, no magic number, etc.). Specifically, write for each bthread a comment that explain what it does and make sure that the bthread's name reflects its purpose. See the file for an example.$$
 
 ## How we tested the system
 See the last two lessons of the [Provengo Course](https://provengo.github.io/Course/Online%20Course/0.9.5/index.html) for a detailed explanation of the following steps.
