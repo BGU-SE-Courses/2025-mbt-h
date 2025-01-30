@@ -21,7 +21,7 @@ selenium:
 report:
     suite:
         query: :last-5   # other options: :all, :last-N, N,M,O (where N,M,O are run ids)
-scenario.generator.metadata: makeTwoWayGoals    # Name of scenario metadata function.
+scenario.generator.metadata: makeGoals    # Name of scenario metadata function.
 
 # Profiles are a quick and efficient way of maintaining multiple configurations
 # See 

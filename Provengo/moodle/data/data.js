@@ -3,7 +3,7 @@
  */
 
 //@provengo summon selenium
-const URLMOODLE = 'https://sandbox.moodledemo.net/';
+const URLMOODLE = 'https://sandbox404.moodledemo.net/';
 
 
 function user(username, password) {
