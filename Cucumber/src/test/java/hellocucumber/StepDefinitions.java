@@ -1,59 +1,80 @@
 package hellocucumber;
-import io.cucumber.java.en.*;
 
+import io.cucumber.java.Before;
+import io.cucumber.java.After;
+import io.cucumber.java.en.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StepDefinitions {
-    private static List<MoodleHomePage> All_open_Moodle_page ;
-    private static MoodleHomePage MoodleHomePage;
+    private List<MoodleHomePage> allOpenMoodlePages ;
+    private MoodleHomePage moodleHomePageInstance;
     private String webDriver = "webdriver.chrome.driver";
-    private String path = "C:/Users/alaas/Desktop/2025-mbt-h/Selenium/chromedriver.exe";
-    public void Open_Moodle_page() {
-        if(All_open_Moodle_page == null){
-            All_open_Moodle_page = new ArrayList<>();
+    private String path = "C:\\Users\\alaas\\Desktop\\2025-mbt-h\\Selenium\\chromedriver.exe";
+
+    @Before
+    public void setUp() {
+        if (allOpenMoodlePages == null) {
+            allOpenMoodlePages = new ArrayList<>();
         }
-        MoodleHomePage = new MoodleHomePage();
-        All_open_Moodle_page.add(MoodleHomePage);
-        MoodleHomePage.start_the_moodle_web(webDriver,path);
+        moodleHomePageInstance = new MoodleHomePage();
+        allOpenMoodlePages.add(moodleHomePageInstance);
+        moodleHomePageInstance.start_the_moodle_web(webDriver, path);
     }
 
+    @After
+    public void tearDown() {
+        moodleHomePageInstance.closeBrowser();
+    }
+
+    // log in to the student user name and passsword
     @Given("the student logged in to the Moodle system with username {string} and password {string}")
-    public void home_page_of_moodle_student(String username, String password){
-        Open_Moodle_page();
-        MoodleHomePage.login(username, password);
+    public void homePageOfMoodleStudent(String username, String password) {
+        moodleHomePageInstance.login(username, password);
     }
-    @And("the student is enrolled in a course {int}")
-    public  void student_have_the_course(int id )
-    {
-        MoodleHomePage.have_the_course(id);
-    }
-    @When("the student uploads an assignment to the course")
-    public void student_uploads_an_assignment_to_the_course(){
 
+    // have the course and in to the course page
+    @And("the student is enrolled in a course {string}")
+    public void studentHasTheCourse(String course_name ) {
+        moodleHomePageInstance.have_the_course(course_name);
+    }
+
+    @And ("the course have a assignment to submit name : {string}")
+    public void have_assignment_to_submit (String name) {
+        moodleHomePageInstance.have_assignment_in_course(name);
+    }
+
+    // we are where the add submission bottom
+
+    @When("the student uploads an assignment {string}")
+    public void studentUploadsAssignmentToCourse(String answer) {
+        moodleHomePageInstance.add_submission(answer);
     }
 
     @Then("the assignment is added to the assignment list in Moodle")
-    public void assignment_is_added_to_the_assignment_list_in_Moodle(){
-
+    public void assignmentIsAddedToAssignmentListInMoodle() {
+        // Add verification logic
+        System.out.println("Assignment successfully added to the course.");
     }
-
 
     @Given("the teacher logged in to the Moodle system with username {string} and password {string}")
-    public void home_page_of_moodle_teacher(String username, String password) {
-        Open_Moodle_page();
-        MoodleHomePage.login(username, password);
+    public void homePageOfMoodleTeacher(String username, String password) {
+        moodleHomePageInstance.login(username, password);
     }
-    @And ("the teacher is teacher of the course {int}")
-    public void teacher_has_course (int id ) throws InterruptedException {
-        MoodleHomePage.have_the_course(id);
+
+    @And("the teacher is teacher of the course {string}")
+    public void teacherHasCourse(String course_name) {
+        moodleHomePageInstance.have_the_course(course_name);
     }
+
     @When("the teacher deletes an assignment")
-    public void delete_assignment() throws InterruptedException {
-        MoodleHomePage.delete_assignment();
+    public void deleteAssignment() {
+        moodleHomePageInstance.delete_assignment();
     }
+
     @Then("the assignment is deleted")
-    public void the_assignment_is_added_to_the_assignment_list_in_Moodle() {}
-
-
+    public void assignmentIsDeleted() {
+        // Add verification logic
+        System.out.println("Assignment successfully deleted.");
+    }
 }

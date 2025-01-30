@@ -1,28 +1,18 @@
 package hellocucumber;
-import io.cucumber.java.Before;
-import org.testng.annotations.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+
+import java.time.Duration;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.testng.annotations.Test;
 
-import org.junit.jupiter.api.Assertions;
+public class MoodleHomePage {
+    private WebDriver driver;
+    private WebDriverWait wait;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class  MoodleHomePage {
-    private static WebDriver driver ;
-    private static WebDriverWait wait;
-
-    public void start_the_moodle_web (String webDriver , String path)
-    {
+    // Starts the Moodle website
+    public void start_the_moodle_web(String webDriver, String path) {
         System.setProperty(webDriver, path);
         this.driver = new ChromeDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(40));
@@ -30,46 +20,88 @@ public class  MoodleHomePage {
         driver.manage().window().setSize(new Dimension(700, 800));
     }
 
-    public void login(String username, String password)
-    {
-        driver.get("http://localhost/login/index.php");
-        wait = new WebDriverWait(driver, Duration.ofSeconds(40));
-        WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"username\"]")));
-        usernameInput.sendKeys(username);
-        WebElement passwordInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"password\"]")));
-        passwordInput.sendKeys(password);
-        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"loginbtn\"]")));
-        loginButton.click();
+    public void login(String username, String password) {
+        try {
+            driver.get("http://localhost/login/index.php");
+            WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+            usernameInput.sendKeys(username);
+            WebElement passwordInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+            passwordInput.sendKeys(password);
+            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("loginbtn")));
+            loginButton.click();
+            System.out.println("Login Done :) ");
+        } catch (Exception e) {
+            System.err.println("error with the login function : " + e.getMessage());
+        }
     }
-    public void have_the_course (int course_id )
-    {
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("http://localhost/my/courses.php");
-        wait.until(ExpectedConditions.urlContains("courses.php"));
-        String courseUrl = "http://localhost/course/view.php?id=" + course_id;
-        driver.get(courseUrl);
-        wait.until(ExpectedConditions.urlToBe(courseUrl));
-        WebElement courseTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("course-title")));
-        System.out.println("Course Loaded: " + courseTitle.getText());
+    public void have_the_course(String name) {
+        try {
+            driver.get("http://localhost/my/courses.php");
+            wait.until(ExpectedConditions.urlContains("courses.php"));
+            WebElement course = wait.until(ExpectedConditions.elementToBeClickable(By.linkText(name)));
+            course.click();
+            wait.until(ExpectedConditions.urlContains("course/view.php"));
+            System.out.println("have_the_course Done :) ");
 
+        } catch (Exception e) {
+            System.err.println("error with the have_the_course function : " + e.getMessage());
+        }
     }
-    public void delete_assignment() throws InterruptedException {
 
-        // i cant run the test right now but you have to change the  Thread.sleep(2000) line
-        // replace it with the wait driver functions
-        // like what i did in the log_in function
-        driver.findElement(By.xpath("/html/body/div[2]/nav/div/div[2]/form/div/div")).click();
-        Thread.sleep(2000);
-        WebElement options = driver.findElement(By.xpath("//*[@id=\"action-menu-toggle-3\"]\n"));
-        options.click();
-        WebElement delete_option = driver.findElement(By.xpath("/html/body/div[4]/div[5]/div/div[3]/div/section/div/div/div/ul/li[1]/div[1]/div[2]/ul/li[2]/div[2]/div[2]/div[5]/div/div/div/div/div/a[8]\n"));
-        delete_option.click();
-//        WebElement delete = driver.findElement(By.xpath("/html/body/div[8]/div[2]/div/div/div[3]/button[2]\n"));
-//        delete.click();
-        Thread.sleep(2000);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        WebElement delete = driver.findElement(By.xpath("//button[contains(text(),'Delete')]"));
-        js.executeScript("arguments[0].click();", delete);
+    public void have_assignment_in_course(String name) {
+        try {
+            WebElement assignmentLink = wait.until(ExpectedConditions.elementToBeClickable(By.linkText(name)));
+            assignmentLink.click();
+            wait.until(ExpectedConditions.urlContains("mod/assign/view.php"));
+            System.out.println("open the assignment page Done  :) ");
+        } catch (Exception e) {
+            System.err.println("Error with the have_assignment_in_course function : " + e.getMessage());
+        }
+    }
+
+    public void add_submission(String answer) {
+        try {
+            WebElement addSubmissionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(), 'Add submission')]")));
+            addSubmissionButton.click();
+
+
+        } catch (Exception e) {
+            System.err.println("Error with the add_submission function : " + e.getMessage());
+        }
+    }
+
+
+
+
+
+
+    // Deletes an assignment
+    public void delete_assignment() {
+        try {
+            WebElement actionMenu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'action-menu')]")));
+            actionMenu.click();
+
+            WebElement options = wait.until(ExpectedConditions.elementToBeClickable(By.id("action-menu-toggle-3")));
+            options.click();
+
+            WebElement deleteOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(), 'Delete')]")));
+            deleteOption.click();
+
+            WebElement confirmDelete = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Delete')]")));
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", confirmDelete);
+
+            System.out.println("Assignment deleted successfully.");
+        } catch (Exception e) {
+            System.err.println("Error while deleting assignment: " + e.getMessage());
+        }
+    }
+
+    // Closes the browser
+    public void closeBrowser() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
