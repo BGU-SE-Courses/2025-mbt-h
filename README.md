@@ -57,17 +57,5 @@ We used two different testing methods:
 Each of the testing methods is elaborated in its own directory. 
 
 ## Results
-Update all README.md files (except for d-e, see Section 1). Specifically, replace all $$*TODO*…$$ according to the instructions inside the $$.
 
-## Detected Bugs
-We detected the following bugs:
-
-1. Bug 1: 
-   1. General description: ...
-   2. Steps to reproduce: ...
-   3. Expected result: ...
-   4. Actual result: ...
-   5. Link to the bug report: (you are encouraged to report the bug to the developers of the software)
-2. Bug 2: ...
-
-$$*TODO* if you did not detect the bug, you should delete this section$$  
+2. $$Provengo$$: The test suites we generated were largely successful, although we found it hard to create the two-way coverage criterion due to the lack of guidelines/explanation on what we are supposed to do. We didnt really understand how to create a two-way coverage criterion and we performed this section largely based on our intuition (we created a new make-goals that basically creates every possible pair combination excluding ones that are not legal). We hope this was the correct implementation. We also witnessed that the sandbox moodle was being updated while we were working, which sometimes would make issues to the xpaths as different version were virtually a different website, so we then fixated on the sandbox moodle version 4.4 so that we would be working on a stable version that have static xpaths that do not change.
