@@ -7,6 +7,34 @@ function login(session, data){
   session.click(xpaths.login.loginButton)
 }
 
+//In case the tour appears
+function skipEditTourIfPresent(session){
+  session.runCode({xpath: xpaths.tours.editTour},function(){
+    try{
+      let skipTourButton = document.evaluate(pvg.params.xpath,document,null,XPathResult.FIRST_ORDERED_NODE_TYPE,null).singleNodeValue
+
+      //in case the button appears, then click
+      if(skipTourButton){
+        skipTourButton.click()
+      }
+      
+    }catch(error){
+      //idk why
+    }});
+}
+
+function skipStudentTourIfPresent(session){
+  session.runCode({xpath: xpaths.tours.studentTour},function(){
+    try{
+      let skipTourButton = document.evaluate(pvg.params.xpath,document,null,XPathResult.FIRST_ORDERED_NODE_TYPE,null).singleNodeValue
+
+      if(skipTourButton){
+        skipTourButton.click()
+      }
+    }catch(error){ 
+    }});
+}
+
 
 //Go to the first course, as it is the only course that the student has access to.
 function goToCourse(session){
@@ -21,6 +49,7 @@ function goToCourse(session){
 function addAssignment(session, data) {
   //going to add assignment form
   session.click(xpaths.add_submission.editToggle);
+  skipEditTourIfPresent(session)
   session.click(xpaths.add_submission.addActivityButton);
   session.waitForVisibility(xpaths.add_submission.addAssignment);
   session.click(xpaths.add_submission.addAssignment);
@@ -87,6 +116,7 @@ function submitAssignment(session, data){
 
 function deleteAssignment(session, data) {
   session.click(xpaths.add_submission.editToggle);
+  skipEditTourIfPresent(session)
 
   //dynamic Xpath to toggle menu for specific assignment
   let toggleXpath = `//div[contains(@class, 'activity-grid')]//span[contains(@class, 'instancename') and contains(text(), '${data.assignmentName}')]/ancestor::div[contains(@class, 'activity-grid')]//a[contains(@class, 'dropdown-toggle')]`  

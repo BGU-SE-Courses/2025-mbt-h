@@ -1,6 +1,7 @@
 // @provengo summon ctrl
 // @provengo summon selenium
 
+
 /**
  * List of events "of interest" that we want test suites to cover.
  */
@@ -29,9 +30,7 @@ const makeTwoWayGoals = function() {
 
     for (let i = 0; i < events.length; i++) {
         for (let j = i + 1; j < events.length; j++) {
-            if (!(events[i].toString().includes("Deleted") && events[j].toString().includes("SubmissionForm"))) {
-                pairs.push([events[i], events[j]]);
-            }
+            pairs.push([events[i], events[j]]);
         }
     }
 

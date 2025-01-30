@@ -1,4 +1,5 @@
 // @provengo summon selenium
+// @provengo summon ctrl
 
 
 /**
@@ -33,6 +34,7 @@ bthread('studentSubmit', function(){
   bp.sync({request: bp.Event("Submitting Assignment")})
   let assignmentName = bp.store.get('assignmentName') //getting the assignment name from stored
   goToCourse(s) //go to course
+  skipStudentTourIfPresent(s)
   bp.sync({request: bp.Event("CourseEnter")}) 
   let submissionText = choose(Object.values(SUBMISSIONS))
   

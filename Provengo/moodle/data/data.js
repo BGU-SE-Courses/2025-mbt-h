@@ -98,6 +98,11 @@ const xpaths = {
     loginButton: '//*[@id="loginbtn"]'
   },
 
+  tours: {
+    editTour: '//button[contains(@class, "btn-secondary") and contains(@data-role, "end")]',
+    studentTour: '//button[contains(@class, "btn") and contains(@data-role, "end") and (text()="Skip tour" or text()="Got it")]'
+  },
+
   courses: {
     myCoursesTab: '//a[@role="menuitem" and contains(text(), "My courses")]',
     myFirstCourse: '//a[contains(@class, "aalink coursename") and contains(@href, "course/view.php")]'
