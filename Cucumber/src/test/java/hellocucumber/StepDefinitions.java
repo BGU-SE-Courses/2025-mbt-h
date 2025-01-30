@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StepDefinitions {
-    private List<MoodleHomePage> allOpenMoodlePages ;
+    private List<MoodleHomePage> allOpenMoodlePages;
     private MoodleHomePage moodleHomePageInstance;
     private String webDriver = "webdriver.chrome.driver";
     private String path = "C:\\Users\\alaas\\Desktop\\2025-mbt-h\\Selenium\\chromedriver.exe";
 
     @Before
-    public void setUp() {
+    public void open_moodle_page () {
         if (allOpenMoodlePages == null) {
             allOpenMoodlePages = new ArrayList<>();
         }
@@ -23,28 +23,25 @@ public class StepDefinitions {
     }
 
     @After
-    public void tearDown() {
+    public void turn_off_the_moodle_web() {
         moodleHomePageInstance.closeBrowser();
     }
 
-    // log in to the student user name and passsword
     @Given("the student logged in to the Moodle system with username {string} and password {string}")
     public void homePageOfMoodleStudent(String username, String password) {
         moodleHomePageInstance.login(username, password);
     }
 
-    // have the course and in to the course page
     @And("the student is enrolled in a course {string}")
-    public void studentHasTheCourse(String course_name ) {
+    public void studentHasTheCourse(String course_name) {
         moodleHomePageInstance.have_the_course(course_name);
     }
 
-    @And ("the course have a assignment to submit name : {string}")
-    public void have_assignment_to_submit (String name) {
+    @And("the course have a assignment to submit name : {string}")
+    public void have_assignment_to_submit(String name) {
         moodleHomePageInstance.have_assignment_in_course(name);
     }
 
-    // we are where the add submission bottom
 
     @When("the student uploads an assignment {string}")
     public void studentUploadsAssignmentToCourse(String answer) {
@@ -52,9 +49,8 @@ public class StepDefinitions {
     }
 
     @Then("the assignment is added to the assignment list in Moodle")
-    public void assignmentIsAddedToAssignmentListInMoodle() {
-        // Add verification logic
-        System.out.println("Assignment successfully added to the course.");
+    public void update_status() {
+        moodleHomePageInstance.update_the_status_of_the_submition();
     }
 
     @Given("the teacher logged in to the Moodle system with username {string} and password {string}")
@@ -67,14 +63,8 @@ public class StepDefinitions {
         moodleHomePageInstance.have_the_course(course_name);
     }
 
-    @When("the teacher deletes an assignment")
+    @When("the assignment status updated")
     public void deleteAssignment() {
         moodleHomePageInstance.delete_assignment();
-    }
-
-    @Then("the assignment is deleted")
-    public void assignmentIsDeleted() {
-        // Add verification logic
-        System.out.println("Assignment successfully deleted.");
     }
 }
